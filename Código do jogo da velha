@@ -11,9 +11,29 @@ public class Player : MonoBehaviour
 
     [Header("My point")]
     public Text XScore; 
-    public int Xpontos = 3;
-    public GameObject OScore; 
-    public int Opontos = 0;
+    private int _xpontos = 0;
+    public Text OScore; 
+    private int _opontos = 0;
+
+    public int Xpontos // sistema de atualizacao dos pontos do X
+    {
+        get {return _xpontos; }
+        set
+        {
+            _xpontos = value;
+            XScore.text = _xpontos.ToString();
+        }
+    }
+
+    public int Opontos // sistema de atualizacao dos pontos do O
+    {
+        get {return _opontos; }
+        set 
+        {
+            _opontos = value;
+            OScore.text = _opontos.ToString();
+        }
+    }
 
     [Header("Homes")]
     public GameObject[] input;
@@ -30,9 +50,12 @@ public class Player : MonoBehaviour
 
     void Start() // Void Start e chamado no inicio do jogo
     {
-        //XScore.GetComponent<Text>().text = Xpontos.ToString();
-        OScore.GetComponent<Text>().text = Opontos.ToString();
         XScore.text = Xpontos.ToString();
+        OScore.text = Opontos.ToString();
+
+        //XScore.GetComponent<Text>().text = Xpontos.ToString();
+        //OScore.GetComponent<Text>().text = Opontos.ToString();
+       // XScore.text = Xpontos.ToString();
         //OScore.text = Opontos.ToString();
         XO_Pieces = new XorO_Piece[matrixSize, matrixSize];
     }
@@ -40,7 +63,9 @@ public class Player : MonoBehaviour
 
     void Update() // Update e para verificar o clique do mouse a cada frame
     {
-        
+        XScore.text = Xpontos.ToString();
+        OScore.text = Opontos.ToString();
+
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
             InstantiateXOs(); 
@@ -192,16 +217,25 @@ public class Player : MonoBehaviour
         if (Winner == 'X')
         {
             Debug.Log("Parece que o ganhador foi o X");
-            Xpontos++;
+            _xpontos+= 1;
+            //comparation();
             
         }
         else if (Winner == 'O')
         {
             Debug.Log("Nosso ganhador foi O");
-            Opontos++;
+            _opontos += 1;
         }
+        
     }
 
+    /*void comparation ()
+    {
+        if(_xpontos >= 1 )
+        {
+            Debug.Log("valor do jogador 1 é: "+_xpontos);
+        }
+    }*/
 
     public bool GameIsOver() // GameIsOver verifica se o jogo terminou
     {
